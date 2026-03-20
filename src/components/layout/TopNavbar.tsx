@@ -53,10 +53,10 @@ export default function TopNavbar({ onMenuClick }: Props) {
         {/* Avatar */}
         <button className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg hover:bg-muted transition-colors group">
           <div className="w-7 h-7 purple-gradient rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">
-            AK
+            GK
           </div>
           <div className="hidden sm:block text-left">
-            <p className="text-xs font-semibold text-foreground leading-tight">Aryan Kumar</p>
+            <p className="text-xs font-semibold text-foreground leading-tight">Gogul Krishnan</p>
             <p className="text-[10px] text-muted-foreground leading-tight">Super Admin</p>
           </div>
           <ChevronDown className="w-3 h-3 text-muted-foreground ml-1 hidden sm:block" />
