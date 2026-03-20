@@ -2,6 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gym Management Admin Portal – Design System */
+
+@layer base {
+  :root {
+    /* Core surfaces */
+    --background: 0 0% 100%;
+    --background-secondary: 210 40% 98%;
+    --foreground: 221 39% 11%;
+
+    /* Cards & popovers */
+    --card: 0 0% 100%;
+    --card-foreground: 221 39% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 39% 11%;
+
+    /* Primary = Purple */
+    --primary: 258 88% 66%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 258 100% 96%;
+    --primary-muted: 258 70% 94%;
+
+    /* Secondary surfaces */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 221 39% 11%;
+
+    /* Muted */
+    --muted: 210 40% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Accent (soft purple) */
+    --accent: 258 88% 66%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Status */
+    --success: 142 71% 45%;
+    --success-bg: 142 76% 95%;
+    --warning: 38 93% 51%;
+    --warning-bg: 45 93% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --danger-bg: 0 86% 97%;
+
+    /* Borders */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 258 88% 66%;
+
+    /* Radius */
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 221 39% 11%;
+    --sidebar-primary: 258 88% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 258 100% 96%;
+    --sidebar-accent-foreground: 258 88% 50%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 258 88% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: hsl(var(--background-secondary)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); }
+
+/* Animations */
+@keyframes slide-in-right {
+  from { transform: translateX(-12px); opacity: 0; filter: blur(4px); }
+  to   { transform: translateX(0);     opacity: 1; filter: blur(0); }
+}
+@keyframes fade-up {
+  from { transform: translateY(12px); opacity: 0; filter: blur(4px); }
+  to   { transform: translateY(0);    opacity: 1; filter: blur(0); }
+}
+@keyframes scale-in {
+  from { transform: scale(0.97); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.animate-slide-in  { animation: slide-in-right 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-up   { animation: fade-up 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-scale-in  { animation: scale-in 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Stagger helpers */
+.stagger-1 { animation-delay: 60ms;  }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 180ms; }
+.stagger-4 { animation-delay: 240ms; }
+.stagger-5 { animation-delay: 300ms; }
+.stagger-6 { animation-delay: 360ms; }
+
+/* Stat card shimmer on hover */
+.stat-card {
+  @apply bg-card rounded-2xl border border-border p-6 transition-shadow duration-300;
+}
+.stat-card:hover {
+  box-shadow: 0 8px 32px -8px hsl(258 88% 66% / 0.18);
+}
+
+/* Purple gradient backgrounds */
+.purple-gradient {
+  background: linear-gradient(135deg, hsl(258 88% 66%) 0%, hsl(270 80% 72%) 100%);
+}
+.purple-soft {
+  background: linear-gradient(135deg, hsl(258 100% 97%) 0%, hsl(270 100% 96%) 100%);
+}
+
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
