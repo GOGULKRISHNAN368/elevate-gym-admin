@@ -5,6 +5,7 @@ import {
   Settings, ChevronLeft, ChevronRight, Dumbbell, Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard",  to: "/" },
@@ -25,20 +26,21 @@ interface Props {
 
 export default function AppSidebar({ collapsed, onToggle }: Props) {
   const { pathname } = useLocation();
+  const isMobile = useIsMobile();
 
   return (
     <aside
       className={cn(
-        "relative flex flex-col bg-card border-r border-border transition-all duration-300 shrink-0",
-        collapsed ? "w-[68px]" : "w-[240px]"
+        "relative flex flex-col h-full bg-card border-r border-border transition-all duration-300 shrink-0 overflow-hidden",
+        isMobile ? "w-[260px]" : (collapsed ? "w-[68px]" : "w-[240px]")
       )}
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 px-4 py-5 border-b border-border">
+      <div className="flex items-center gap-3 px-4 py-5 border-b border-border shrink-0">
         <div className="flex-shrink-0 w-9 h-9 purple-gradient rounded-xl flex items-center justify-center shadow-purple-sm">
           <Dumbbell className="w-5 h-5 text-white" />
         </div>
-        {!collapsed && (
+        {(!collapsed || isMobile) && (
           <div className="animate-scale-in overflow-hidden">
             <p className="font-bold text-sm text-foreground leading-tight">FitCore Pro</p>
             <p className="text-xs text-muted-foreground">Admin Portal</p>
@@ -47,9 +49,11 @@ export default function AppSidebar({ collapsed, onToggle }: Props) {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5">
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto no-scrollbar">
         {navItems.map(({ icon: Icon, label, to }) => {
           const active = pathname === to || (to !== "/" && pathname.startsWith(to));
+          const showLabel = !collapsed || isMobile;
+
           return (
             <Link
               key={to}
@@ -62,8 +66,8 @@ export default function AppSidebar({ collapsed, onToggle }: Props) {
               )}
             >
               <Icon className={cn("shrink-0 w-[18px] h-[18px]", active ? "text-primary" : "text-muted-foreground group-hover:text-foreground")} />
-              {!collapsed && <span className="truncate">{label}</span>}
-              {!collapsed && active && (
+              {showLabel && <span className="truncate">{label}</span>}
+              {showLabel && active && (
                 <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
               )}
             </Link>
@@ -71,9 +75,9 @@ export default function AppSidebar({ collapsed, onToggle }: Props) {
         })}
       </nav>
 
-      {/* Upgrade Card */}
-      {!collapsed && (
-        <div className="m-3 p-4 purple-soft rounded-2xl border border-purple-100 animate-fade-up">
+      {/* Upgrade Card - Only show when expanded or on mobile */}
+      {(!collapsed || isMobile) && (
+        <div className="m-3 p-4 purple-soft rounded-2xl border border-purple-100 animate-fade-up shrink-0">
           <div className="flex items-center gap-2 mb-2">
             <Zap className="w-4 h-4 text-primary" />
             <span className="text-xs font-semibold text-primary">Pro Plan</span>
@@ -85,13 +89,15 @@ export default function AppSidebar({ collapsed, onToggle }: Props) {
         </div>
       )}
 
-      {/* Collapse Toggle */}
-      <button
-        onClick={onToggle}
-        className="absolute -right-3.5 top-[68px] z-10 w-7 h-7 bg-card border border-border rounded-full flex items-center justify-center shadow-card hover:bg-muted transition-colors"
-      >
-        {collapsed ? <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronLeft className="w-3.5 h-3.5 text-muted-foreground" />}
-      </button>
+      {/* Collapse Toggle - Hide on mobile */}
+      {!isMobile && (
+        <button
+          onClick={onToggle}
+          className="absolute -right-3.5 top-[68px] z-10 w-7 h-7 bg-card border border-border rounded-full flex items-center justify-center shadow-card hover:bg-muted transition-colors"
+        >
+          {collapsed ? <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronLeft className="w-3.5 h-3.5 text-muted-foreground" />}
+        </button>
+      )}
     </aside>
   );
 }
